@@ -1,0 +1,107 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #111;
+    font-family: 'Rajdhani', sans-serif;
+  }
+
+  /* ── scene ── */
+  .loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 36px;
+  }
+
+  /* ── 5×5 grid ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(5, 52px);
+    grid-template-rows: repeat(5, 52px);
+    gap: 8px;
+  }
+
+  .cell {
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    background: #1e1e1e;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  /* Each cell gets a slightly different delay to create a wave */
+  /* Row-by-row wave, top → bottom */
+  .cell { animation-delay: calc(var(--i) * 0.08s); }
+
+  @keyframes pulse {
+    0%, 100% {
+      background: #1c1c1c;
+      box-shadow: none;
+    }
+    50% {
+      background: #c6f135;
+      box-shadow:
+        0 0 8px  #c6f135,
+        0 0 18px rgba(198, 241, 53, 0.55),
+        0 0 30px rgba(198, 241, 53, 0.25);
+    }
+  }
+
+  /* ── progress bar ── */
+  .bar-wrap {
+    width: 300px;
+    height: 3px;
+    background: #2a2a2a;
+    border-radius: 99px;
+    overflow: visible;
+    position: relative;
+  }
+
+  .bar-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 99px;
+    background: #c6f135;
+    box-shadow: 0 0 8px #c6f135, 0 0 18px rgba(198,241,53,0.5);
+    animation: fillBar 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    position: relative;
+  }
+
+  /* glowing tip */
+  .bar-fill::after {
+    content: '';
+    position: absolute;
+    right: -1px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #e8ff70;
+    box-shadow: 0 0 6px #c6f135, 0 0 14px rgba(198,241,53,0.8);
+  }
+
+  @keyframes fillBar {
+    0%   { width: 0%; }
+    80%  { width: 100%; }
+    100% { width: 100%; opacity: 0; }
+  }
+
+  /* ── label ── */
+  .label {
+    font-size: 1rem;
+    letter-spacing: 0.35em;
+    color: #555;
+    text-transform: uppercase;
+    font-weight: 500;
+    animation: labelPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes labelPulse {
+    0%, 100% { color: #444; }
+    50%       { color: #888; }
+  }
